@@ -17,18 +17,9 @@ public class ParticipantGroup {
     private String id;
     private Map<String, List<String>> participantGroupsIds;
     private Timestamp createdAt;
-    type type;
-
-    public ParticipantGroup(Map<String, List<String>> ids, Timestamp timestamp,
-                           type type) {
+    public ParticipantGroup(Map<String, List<String>> ids, Timestamp timestamp) {
         this.participantGroupsIds = ids;
         this.createdAt = timestamp;
-        this.type = type;
     }
 
-    public enum type{
-        PAREDAO,
-        LIDER,
-        ANJO
-    }
 }

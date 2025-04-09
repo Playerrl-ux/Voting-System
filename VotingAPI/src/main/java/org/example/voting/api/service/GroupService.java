@@ -29,8 +29,7 @@ public class GroupService {
         Map<String, List<String>> ids = dto.ids().stream()
                 .collect(Collectors.toMap(k -> UUID.randomUUID().toString(), v -> v));
 
-        var participantGroup = new ParticipantGroup(ids, new Timestamp(System.currentTimeMillis()),
-                dto.type());
+        var participantGroup = new ParticipantGroup(ids, new Timestamp(System.currentTimeMillis()));
         participantGroup = groupRepository.save(participantGroup);
 
         configRepository.save(new ConfigParameters("validVoting", String.join(",", ids.keySet()),
