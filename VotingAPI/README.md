@@ -63,6 +63,7 @@ Imagine uma eleição para um grêmio escolar com 3 chapas:
 ## 📤 Envio de Votos
 
 A API permite o envio de votos via um DTO chamado `VoteEvent`. Esse objeto é enviado para o tópico Kafka chamado `votes`.
+A API escuta na porta 8080.
 
 ### Estrutura do `VoteEvent`
 ```json
