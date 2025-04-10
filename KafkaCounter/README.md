@@ -9,6 +9,8 @@ O módulo **Kafka-Counter** é responsável por registrar os votos recebidos no 
 1. **Validação Inicial com Redis:**
    - Ao iniciar, o consumidor verifica se o Redis está populado com os IDs válidos de conjuntos de participantes.
    - Caso não esteja, ele carrega os dados a partir dos parâmetros de configuração atualizados pela Voting-API, preenchendo o Redis com os IDs válidos para a votação atual.
+   - O nome desse parametro é `validVoting`, ele tem como valor uma sequencia de ids para os conjuntos válidos separados pro vírgula.
+   - É importante atualizar esse parametro com ids válidos antes da votação começar, isso pode ser feito na API Voting
 
 2. **Recepção de Votos:**
    - Quando um `VoteEvent` é recebido do tópico `votes`, o Kafka-Counter executa os seguintes passos:
