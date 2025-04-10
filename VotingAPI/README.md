@@ -20,7 +20,6 @@ O projeto **Voting-API** é responsável por gerenciar os dados de entrada do si
 
 - Representa os parâmetros de configuração da votação.
 - Um dos principais parâmetros indica quais **conjuntos** estão disponíveis para votação.
-- Ao iniciar, a API utiliza essas configurações para popular o Redis (cache em memória), tornando os dados rapidamente acessíveis ao **Kafka-Counter**.
 
 ### 🧑 `Participant`
 
@@ -80,10 +79,8 @@ A API escuta na porta 8080.
 
 ## 🔁 Fluxo Resumido da Voting-API
 
-1. A API é iniciada e lê os parâmetros de configuração do MongoDB
-2. Os conjuntos válidos para votação são salvos no Redis
-3. Usuários, participantes e grupos são formados conforme a necessidade
-4. Quando um voto é recebido, ele é transformado em um `VoteEvent` e publicado no Kafka
+1. Usuários, participantes e grupos são formados conforme a necessidade.
+2. Quando um voto é recebido, ele é transformado em um `VoteEvent` e publicado no Kafka
 
 ---
 
