@@ -54,10 +54,8 @@ O sistema é composto por três projetos que se comunicam de forma assíncrona u
 
 - **Função:** Processamento contínuo dos votos
 - **Responsabilidades:**
-  - Calcular, em tempo real, a porcentagem de votos recebida por cada participante
-  - Tornar os dados acessíveis através de uma API GET
-  - Utilizar Kafka Streams para manter os dados atualizados em tempo real enquanto o serviço estiver rodando
-
+  - Calcular a porcentagem de votos recebida por cada participante
+  - Tornar os dados acessíveis através de endpoint
 ---
 
 ### OBS: Esse documento cobre a visão geral do projeto. Cada pasta dentro do diretório raiz desse repositorio contém projetos Java individuais com seus respectivos markdowns
