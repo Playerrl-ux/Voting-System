@@ -4,9 +4,11 @@ import org.example.kafka.votes.counter.cache.ParticipantGroups;
 import org.example.kafka.votes.counter.event.VoteEvent;
 import org.example.kafka.votes.counter.model.RepeatedVote;
 import org.example.kafka.votes.counter.model.UniqueVote;
+import org.example.kafka.votes.counter.model.User;
 import org.example.kafka.votes.counter.repository.ParticipantGroupsRepository;
 import org.example.kafka.votes.counter.repository.RepeatedVoteRepository;
 import org.example.kafka.votes.counter.repository.UniqueVoteRepository;
+import org.example.kafka.votes.counter.repository.UserRepository;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +22,34 @@ public class VoteService {
     private final RepeatedVoteRepository repeatedVoteRepository;
     private final UniqueVoteRepository uniqueVoteRepository;
     private final ParticipantGroupsRepository participantGroupsRepository;
+    private final UserRepository userRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public VoteService(RepeatedVoteRepository repeatedVoteRepository,
                        UniqueVoteRepository uniqueVoteRepository,
                        ParticipantGroupsRepository participantGroupsRepository,
-                       KafkaTemplate<String, String> kafkaTemplate) {
+                       KafkaTemplate<String, String> kafkaTemplate, UserRepository userRepository) {
         this.repeatedVoteRepository = repeatedVoteRepository;
         this.uniqueVoteRepository = uniqueVoteRepository;
         this.participantGroupsRepository = participantGroupsRepository;
         this.kafkaTemplate = kafkaTemplate;
+        this.userRepository = userRepository;
     }
 
     public void storeVote(VoteEvent vote, Instant createdAt) {
 
-        Optional<ParticipantGroups> part = participantGroupsRepository.findById(vote.groupId());
-        if(part.isEmpty()) {
+        Optional<ParticipantGroups> participant = participantGroupsRepository.findById(vote.groupId());
+        if(participant.isEmpty()) {
             System.out.println("Empty");
             return;
         }
+
+        Optional<User> user = userRepository.findByEmail(vote.userEmail());
+        if(user.isEmpty()) {
+            System.out.println("User not found");
+            return;
+        }
+
 
         Optional<UniqueVote> search = uniqueVoteRepository
                 .findByUserEmailAndGroupId(vote.userEmail(), vote.groupId());

@@ -27,19 +27,14 @@ public class InitializerService {
     @Bean
     public ApplicationRunner init() {
         return args -> {
-            long count = participantGroupsRepository.count();
-            if(count == 0) {
-                Optional<ConfigParameters> search = configParamsRepository.findById("validVoting");
-                if(search.isPresent()) {
-                    List<String> ids = Arrays.stream(search.get().getValue()
-                            .split(",")).toList();
-                    List<ParticipantGroups> groups = ids.stream().map(ParticipantGroups::new).toList();
-                    participantGroupsRepository.saveAll(groups);
-                }else{
-                    throw new RuntimeException("No valid voting found");
-                }
-            }else{
-                System.out.println("já existem valores no redis");
+
+            participantGroupsRepository.deleteAll();
+            Optional<ConfigParameters> search = configParamsRepository.findById("validVoting");
+            if(search.isPresent()) {
+                List<String> ids = Arrays.stream(search.get().getValue()
+                        .split(",")).toList();
+                List<ParticipantGroups> groups = ids.stream().map(ParticipantGroups::new).toList();
+                participantGroupsRepository.saveAll(groups);
             }
         };
     }
